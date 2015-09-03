@@ -8,10 +8,21 @@
  * For more information on bootstrapping your app, check out:
  * http://sailsjs.org/#!/documentation/reference/sails.config/sails.config.bootstrap.html
  */
+var path = require('path');
 
 module.exports.bootstrap = function(cb) {
 
   // It's very important to trigger this callback method when you are finished
   // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
+  var allFiles = files.getFiles(path.resolve('assets//Music//'));
+  allFiles.forEach(function (elem,index,array) {
+    var splitAt = elem.lastIndexOf("/");
+    var item = elem.substring(splitAt+1,elem.length);
+    Song.create({name:item}).exec(function createCB(err, created){
+      console.log('Created song with name ' + created.name);
+    });
+    console.log(item);
+  });
+
   cb();
 };
